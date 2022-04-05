@@ -52,8 +52,9 @@ buttonLogin.addEventListener('click', event => {
     resquestConfig
   ).then(response => {
     response.json().then(data => {
-      console.log(data.jwt)
+      //console.log(data.jwt)
       localStorage.setItem('token', data.jwt)
+      window.location.href = './tarefas.html'
     })
   })
 })

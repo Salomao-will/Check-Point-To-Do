@@ -1,5 +1,6 @@
 let userNameReference = document.getElementById('userName')
 let imageReference = document.querySelector('.user-image')
+let taskRef = document.querySelector('#tasks')
 
 let resquestConfiguration = {
   headers: {
@@ -26,5 +27,19 @@ function concatenateImage() {
   imageReference.innerHTML = `
   <img src="https://imagens.mdig.com.br/modismo/androgino_chines_Yiming_Zhao_04.jpg " alt="">
   `
-  console.log(imageReference)
+  //console.log(imageReference)
 }
+
+fetch(
+  'https://ctd-todo-api.herokuapp.com/v1/tasks',
+  resquestConfiguration
+).then(response => {
+  if (response.ok) {
+    let skeletonRef = document.querySelector('#skeleton')
+    skeletonRef.style.display = 'none'
+
+    response.json().then(data => {
+      console.log(data)
+    })
+  }
+})

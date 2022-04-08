@@ -35,6 +35,13 @@ form.addEventListener('click', event => {
   if (empty(inputPasswordReference)) {
     errorMessage('Campo <strong>senha</strong> não foi preenchido')
   }
+  if (empty(inputPasswordRepet)) {
+    errorMessage('Campo <strong>Repetir senha</strong> não foi preenchido')
+  } else if (inputPasswordReference.value != inputPasswordRepet.value) {
+    errorMessage(
+      'Campo <strong>Repetir senha</strong> foi preenchido incorretamente'
+    )
+  }
 
   if (errorUlList.querySelectorAll('li').length > 0) {
     event.preventDefault()

@@ -32,8 +32,14 @@ a {
   width: 2em;
   border-radius: 50%;
   background-color: white;
-  opacity: .4;
+  /*opacity: .4;*/
   margin-left: .7em;
+}
+
+#imgUser {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
 }
 
 #closeApp{

@@ -1,12 +1,16 @@
-let inputNameReference = document.querySelector('#inputName')
-let inputSurnameReference = document.querySelector('#inputSurname')
-let inputEmailReference = document.querySelector('#inputEmail')
-let inputPasswordReference = document.querySelector('#inputPassword')
-let inputPasswordRepet = document.querySelector('#inputPasswordRepet')
-let buttonSignupRef = document.querySelector('#buttonSignup')
-let form = document.querySelector('form')
-let errorUlList = document.querySelector('.error ul')
-let errorList = document.querySelector('.error')
+function select(id) {
+  return document.querySelector(id)
+}
+
+let inputNameReference = select('#inputName')
+let inputSurnameReference = select('#inputSurname')
+let inputEmailReference = select('#inputEmail')
+let inputPasswordReference = select('#inputPassword')
+let inputPasswordRepet = select('#inputPasswordRepet')
+let buttonSignupRef = select('#buttonSignup')
+let form = select('form')
+let errorUlList = select('.error ul')
+let errorList = select('.error')
 
 const empty = input => {
   return input.value.trim() === ''

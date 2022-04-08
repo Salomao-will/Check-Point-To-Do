@@ -1,6 +1,11 @@
-let userNameReference = document.getElementById('userName')
-let imageReference = document.querySelector('.user-image')
-let taskRef = document.querySelector('#tasks')
+function select(id) {
+  return document.querySelector(id)
+}
+
+let userNameReference = select('userName')
+let imageReference = select('.user-image')
+let taskRef = select('#tasks')
+let buttonAddToDo = select('#btn-task')
 
 let resquestConfiguration = {
   headers: {
@@ -38,8 +43,6 @@ fetch(
     let skeletonRef = document.querySelector('#skeleton')
     skeletonRef.style.display = 'none'
 
-    response.json().then(data => {
-      console.log(data)
-    })
+    response.json().then(data => {})
   }
 })

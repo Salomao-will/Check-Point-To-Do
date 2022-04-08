@@ -1,9 +1,13 @@
-let form = document.querySelector('form')
-let emailReference = document.querySelector('#inputEmail')
-let passwordReference = document.querySelector('#inputPassword')
-let buttonLogin = document.querySelector('#buttonLogin')
-let ulErrorList = document.querySelector('.error ul')
-let errorList = document.querySelector('.error')
+function select(id) {
+  return document.querySelector(id)
+}
+
+let form = select('form')
+let emailReference = select('#inputEmail')
+let passwordReference = select('#inputPassword')
+let buttonLogin = select('#buttonLogin')
+let ulErrorList = select('.error ul')
+let errorList = select('.error')
 
 const empty = input => {
   return input.value.trim() === ''

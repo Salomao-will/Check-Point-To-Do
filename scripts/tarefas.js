@@ -6,6 +6,7 @@ let userNameReference = select('#userName')
 let imageReference = select('.user-image')
 let taskRef = select('#tasks')
 let buttonAddToDo = select('#btn-task')
+let inputReference = select('#novaTarefa')
 
 let resquestConfiguration = {
   headers: {
@@ -63,5 +64,32 @@ function taskUser() {
     })
   })
 }
-
 taskUser()
+
+buttonAddToDo.addEventListener('click', event => {
+  event.preventDefault()
+  let user = {
+    description: inputReference.value,
+    completed: false
+  }
+
+  let headerRequest = {
+    'Content-Type': 'application/json',
+    Authorization: localStorage.getItem('token')
+  }
+
+  let userConfig = {
+    method: 'POST',
+    body: JSON.stringify(user),
+    headers: headerRequest
+  }
+
+  fetch('https://ctd-todo-api.herokuapp.com/v1/tasks', userConfig).then(
+    response => {
+      response.json().then(task => {
+        localStorage.setItem('task', JSON.stringify(task))
+      })
+    }
+  )
+  taskUser()
+})

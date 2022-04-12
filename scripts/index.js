@@ -37,8 +37,8 @@ buttonLogin.addEventListener('click', event => {
   event.preventDefault()
 
   let credencials = {
-    email: 'string',
-    password: 'string'
+    email: emailReference.value,
+    password: passwordReference.value
   }
 
   let headerRequest = {

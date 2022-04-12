@@ -53,10 +53,10 @@ buttonSignupRef.addEventListener('click', event => {
   event.preventDefault()
 
   let user = {
-    firstName: 'string',
-    lastName: 'string',
-    email: 'string',
-    password: 'string'
+    firstName: inputNameReference.value,
+    lastName: inputSurnameReference.value,
+    email: inputEmailReference.value,
+    password: inputPasswordReference.value
   }
 
   let headerRequest = {
@@ -73,6 +73,7 @@ buttonSignupRef.addEventListener('click', event => {
     response => {
       response.json().then(data => {
         localStorage.setItem('token', data.jwt)
+        window.location.href = './index.html'
       })
     }
   )

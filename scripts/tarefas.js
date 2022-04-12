@@ -7,6 +7,9 @@ let imageReference = select('.user-image')
 let taskRef = select('#tasks')
 let buttonAddToDo = select('#btn-task')
 let inputReference = select('#novaTarefa')
+let closeAppRef = select('#closeApp')
+let notDoneRef = document.querySelector('.not-done')
+let taskFinished = document.querySelector('.tarefas-terminadas')
 
 let resquestConfiguration = {
   headers: {
@@ -46,25 +49,61 @@ function taskUser() {
       skeletonRef.style.display = 'none'
     }
     response.json().then(tasks => {
+      taskRef.innerHTML = ''
+
       for (const task of tasks) {
         let data = new Date(task.createdAt)
 
-        taskRef.innerHTML += `
-
-        <li class="tarefa">
-        <div class="not-done"></div>
-        <div class="descricao">
-          <p class="nome">${task.description}</p>
-          <p class="timestamp">${data.toDateString()}</p>
-        </div>
-        </li>
-        
-        `
+        if (task.completed == false) {
+          taskRef.innerHTML += `
+  
+          <li class="tarefa">
+          <div class="not-done" onclick="taskDone(${task.id})"></div>
+          <div class="descricao">
+            <p class="nome">${task.description}</p>
+            <p class="timestamp">${data.toDateString()}</p>
+          </div>
+          </li>
+          
+          `
+        } else {
+          taskFinished.innerHTML += `
+          <li class="tarefa">
+          <div class="not-done"></div>
+          <div class="descricao">
+            <p class="nome">${task.description}</p>
+            <p class="timestamp">${data.toDateString()}</p>
+          </div>
+          </li>
+          `
+        }
       }
     })
   })
 }
 taskUser()
+
+let taskPut = {
+  method: 'PUT',
+  body: JSON.stringify({
+    completed: true
+  }),
+
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: localStorage.getItem('token')
+  }
+}
+
+function taskDone(id) {
+  fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, taskPut).then(
+    response => {
+      if (response.ok) {
+        taskUser()
+      }
+    }
+  )
+}
 
 buttonAddToDo.addEventListener('click', event => {
   event.preventDefault()
@@ -86,10 +125,14 @@ buttonAddToDo.addEventListener('click', event => {
 
   fetch('https://ctd-todo-api.herokuapp.com/v1/tasks', userConfig).then(
     response => {
-      response.json().then(task => {
-        localStorage.setItem('task', JSON.stringify(task))
-      })
+      if (response.ok) {
+        location.reload()
+      }
     }
   )
-  taskUser()
+})
+
+closeAppRef.addEventListener('click', event => {
+  localStorage.clear()
+  location.href = 'index.html'
 })

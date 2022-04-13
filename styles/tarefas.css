@@ -230,6 +230,14 @@ a {
   text-decoration: line-through;
 }
 
+
+#delete-icon{
+  position: absolute;
+  right: 50px; 
+  width: 32px;
+  height: 32px;
+}
+
 #skeleton .descricao{
   background-color: rgb(189, 189, 189);
 }

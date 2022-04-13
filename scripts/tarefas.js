@@ -47,38 +47,44 @@ function taskUser() {
     if (response.ok) {
       let skeletonRef = document.querySelector('#skeleton')
       skeletonRef.style.display = 'none'
-    }
-    response.json().then(tasks => {
-      taskRef.innerHTML = ''
 
-      for (const task of tasks) {
-        let data = new Date(task.createdAt)
+      response.json().then(tasks => {
+        taskRef.innerHTML = ''
 
-        if (task.completed == false) {
-          taskRef.innerHTML += `
-  
-          <li class="tarefa">
-          <div class="not-done" onclick="taskDone(${task.id})"></div>
-          <div class="descricao">
-            <p class="nome">${task.description}</p>
-            <p class="timestamp">${data.toDateString()}</p>
-          </div>
-          </li>
-          
-          `
-        } else {
-          taskFinished.innerHTML += `
-          <li class="tarefa">
-          <div class="not-done"></div>
-          <div class="descricao">
-            <p class="nome">${task.description}</p>
-            <p class="timestamp">${data.toDateString()}</p>
-          </div>
-          </li>
-          `
+        for (const task of tasks) {
+          let data = new Date(task.createdAt).toLocaleTimeString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          })
+
+          if (task.completed == false) {
+            taskRef.innerHTML += `
+    
+            <li class="tarefa">
+            <div class="not-done" onclick="taskDone(${task.id}, true)"></div>
+            <div class="descricao">
+              <p class="nome">${task.description}</p>
+              <p class="timestamp">${data}</p>
+            </div>
+            </li>
+            
+            `
+          } else {
+            taskFinished.innerHTML += `
+            <li class="tarefa">
+            <div class="not-done" onclick="taskDone(${task.id}, false)"></div>
+            <div class="descricao">
+              <p class="nome">${task.description}</p>
+              <p class="timestamp">${data}</p>
+              </div>
+              <img id="delete-icon" src="https://cdn-icons-png.flaticon.com/512/2891/2891491.png"> 
+            </li>
+            `
+          }
         }
-      }
-    })
+      })
+    }
   })
 }
 taskUser()
@@ -95,11 +101,30 @@ let taskPut = {
   }
 }
 
+let deleteTaskCompleted = {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: localStorage.getItem('token')
+  }
+}
+
+function deleteTask(id) {
+  fetch(
+    `https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`,
+    deleteTaskCompleted
+  ).then(response => {
+    if (response.ok) {
+      location.reload()
+    }
+  })
+}
+
 function taskDone(id) {
   fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, taskPut).then(
     response => {
       if (response.ok) {
-        taskUser()
+        location.reload()
       }
     }
   )

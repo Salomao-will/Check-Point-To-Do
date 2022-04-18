@@ -57,8 +57,16 @@ buttonLogin.addEventListener('click', event => {
   ).then(response => {
     response.json().then(data => {
       //console.log(data.jwt)
-      localStorage.setItem('token', data.jwt)
-      window.location.href = './tarefas.html'
+      if (response.ok) {
+        localStorage.setItem('token', data.jwt)
+        window.location.href = './tarefas.html'
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Usuário ou senha incorreto!'
+        })
+      }
     })
   })
 })

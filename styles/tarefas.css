@@ -231,11 +231,18 @@ a {
 }
 
 
-#delete-icon{
-  position: absolute;
-  right: 50px; 
-  width: 32px;
-  height: 32px;
+#delete-icon{ 
+  position: relative; 
+  padding: 1em; 
+  right: .1em; 
+  width: 2.1em; 
+  height: 2em;
+  cursor: pointer;
+  transition: 0.3s;
+} 
+
+#delete-icon:hover {
+  transform: translateY(-6px);
 }
 
 #skeleton .descricao{

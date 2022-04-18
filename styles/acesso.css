@@ -81,8 +81,10 @@ button {
   color: grey;
   font-size: 2em;
 }
-.ingressar {
+.ingressar  a{
   text-align: center;
+  text-decoration: none;
+  color: #747474;
 }
 .left {
   width: 50%;

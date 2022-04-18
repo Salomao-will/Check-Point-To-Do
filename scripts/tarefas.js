@@ -24,7 +24,7 @@ fetch(
 ).then(Response => {
   Response.json().then(data => {
     concatenateName(data)
-    concatenateImage(data)
+    concatenateImage()
   })
 })
 
@@ -73,12 +73,12 @@ function taskUser() {
           } else {
             taskFinished.innerHTML += `
             <li class="tarefa">
-            <div class="not-done" onclick="taskDone(${task.id}, false)"></div>
+            <div class="not-done"></div>
             <div class="descricao">
               <p class="nome">${task.description}</p>
               <p class="timestamp">${data}</p>
               </div>
-              <img id="delete-icon" src="https://cdn-icons-png.flaticon.com/512/2891/2891491.png"> 
+              <img id="delete-icon" onclick="deleteTask(${task.id})" src="https://cdn-icons-png.flaticon.com/512/2891/2891491.png"> 
             </li>
             `
           }

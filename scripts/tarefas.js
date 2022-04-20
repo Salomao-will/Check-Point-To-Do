@@ -9,7 +9,7 @@ let buttonAddToDo = select('#btn-task')
 let inputReference = select('#novaTarefa')
 let closeAppRef = select('#closeApp')
 let notDoneRef = document.querySelector('.not-done')
-let taskFinished = document.querySelector('.tarefas-terminadas')
+let taskFinished = document.querySelector('#tasks-finished')
 
 let resquestConfiguration = {
   headers: {
@@ -23,8 +23,10 @@ fetch(
   resquestConfiguration
 ).then(Response => {
   Response.json().then(data => {
+    imageReference.innerHTML = (
+      data.firstName[0] + data.lastName[0]
+    ).toUpperCase()
     concatenateName(data)
-    concatenateImage()
   })
 })
 
@@ -44,9 +46,12 @@ function taskUser() {
     'https://ctd-todo-api.herokuapp.com/v1/tasks',
     resquestConfiguration
   ).then(response => {
-    if (response.ok) {
-      let skeletonRef = document.querySelector('#skeleton')
-      skeletonRef.style.display = 'none'
+    if (response) {
+      let skeletonRef = document.querySelectorAll('#skeleton')
+      for (skeleton of skeletonRef)
+        if (response.ok) {
+          skeleton.style.display = 'none'
+        }
 
       response.json().then(tasks => {
         taskRef.innerHTML = ''
@@ -61,7 +66,7 @@ function taskUser() {
           if (task.completed == false) {
             taskRef.innerHTML += `
     
-            <li class="tarefa">
+            <li data-aos="fade-up" class="tarefa">
             <div class="not-done" onclick="taskDone(${task.id}, true)"></div>
             <div class="descricao">
               <p class="nome">${task.description}</p>
@@ -72,7 +77,7 @@ function taskUser() {
             `
           } else {
             taskFinished.innerHTML += `
-            <li class="tarefa">
+            <li data-aos="fade-up" class="tarefa">
             <div class="not-done"></div>
             <div class="descricao">
               <p class="nome">${task.description}</p>
@@ -111,13 +116,13 @@ let deleteTaskCompleted = {
 
 function deleteTask(id) {
   Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    title: 'Você tem certeza ?',
+    text: 'Não será possível reverter a decisão!',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Sim, Delete!'
   }).then(result => {
     if (result.isConfirmed) {
       fetch(
@@ -125,7 +130,7 @@ function deleteTask(id) {
         deleteTaskCompleted
       ).then(response => {
         if (response.ok) {
-          Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+          Swal.fire('Deletado!', 'Seu arquivo foi deletado!', 'success')
         }
         taskUser()
       })

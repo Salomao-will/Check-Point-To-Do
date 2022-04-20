@@ -28,12 +28,22 @@ a {
 }
 
 .user-info .user-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 2em;
   width: 2em;
   border-radius: 50%;
   background-color: white;
-  /*opacity: .4;*/
+  opacity: .6;
   margin-left: .7em;
+}
+
+.user-image {
+
+  font-size: 1em;
+  font-weight: bold;
+  color: black;
 }
 
 #imgUser {
@@ -204,6 +214,7 @@ a {
   margin-left: calc(15% - 4em);
   z-index: 20;
 }
+
 
 .tarefas-terminadas {
   display: flex;

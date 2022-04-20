@@ -50,7 +50,7 @@ function taskUser() {
 
       response.json().then(tasks => {
         taskRef.innerHTML = ''
-
+        taskFinished.innerHTML = ''
         for (const task of tasks) {
           let data = new Date(task.createdAt).toLocaleTimeString('pt-BR', {
             day: '2-digit',
@@ -110,12 +110,26 @@ let deleteTaskCompleted = {
 }
 
 function deleteTask(id) {
-  fetch(
-    `https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`,
-    deleteTaskCompleted
-  ).then(response => {
-    if (response.ok) {
-      location.reload()
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(result => {
+    if (result.isConfirmed) {
+      fetch(
+        `https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`,
+        deleteTaskCompleted
+      ).then(response => {
+        if (response.ok) {
+          Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+        }
+        taskUser()
+      })
+      /* location.reload() */
     }
   })
 }

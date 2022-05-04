@@ -1,3 +1,4 @@
+// Função com um seletor para acessar a DOM
 function select(id) {
   return document.querySelector(id)
 }
@@ -9,14 +10,17 @@ let buttonLogin = select('#buttonLogin')
 let ulErrorList = select('.error ul')
 let errorList = select('.error')
 
+// Funçao que verifica se o input esta vazio
 const empty = input => {
   return input.value.trim() === ''
 }
 
+// Função para inserir uma Lista com menssagem de erro
 const errorMessage = message => {
   ulErrorList.innerHTML += `<li>${message}</li>`
 }
 
+//
 form.addEventListener('click', event => {
   ulErrorList.innerHTML = ''
 
@@ -56,10 +60,19 @@ buttonLogin.addEventListener('click', event => {
     resquestConfig
   ).then(response => {
     response.json().then(data => {
-      //console.log(data.jwt)
       if (response.ok) {
         localStorage.setItem('token', data.jwt)
-        window.location.href = './tarefas.html'
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Você é um usuário cadastrado!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        setTimeout(() => {
+          window.location.assign('../tarefas.html')
+        }, 2000)
+        //window.location.href = './tarefas.html'
       } else {
         Swal.fire({
           icon: 'error',

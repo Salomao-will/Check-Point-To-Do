@@ -24,7 +24,7 @@ fetch(
 ).then(Response => {
   Response.json().then(data => {
     imageReference.innerHTML = (
-      data.firstName[0] + data.lastName[0]
+      data.firstName[0] + data.lastName[4]
     ).toUpperCase()
     concatenateName(data)
   })
@@ -63,7 +63,7 @@ function taskUser() {
             year: 'numeric'
           })
 
-          if (task.completed == false) {
+          if (task.completed === false) {
             taskRef.innerHTML += `
     
             <li data-aos="fade-up" class="tarefa">
@@ -77,8 +77,8 @@ function taskUser() {
             `
           } else {
             taskFinished.innerHTML += `
-            <li data-aos="fade-up" class="tarefa">
-            <div class="not-done"></div>
+            <li class="tarefa">
+            <div class="not-done" onclick="taskDone(${task.id}, false)"></div>
             <div class="descricao">
               <p class="nome">${task.description}</p>
               <p class="timestamp">${data}</p>

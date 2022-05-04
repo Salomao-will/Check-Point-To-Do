@@ -72,7 +72,6 @@ buttonLogin.addEventListener('click', event => {
         setTimeout(() => {
           window.location.assign('../tarefas.html')
         }, 2000)
-        //window.location.href = './tarefas.html'
       } else {
         Swal.fire({
           icon: 'error',
